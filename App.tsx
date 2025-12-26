@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import MapComponent from './components/MapComponent';
 import SearchUI from './components/SearchUI';
-import FloatingControls from './components/FloatingControls';
+import { FloatingControls } from './components/FloatingControls';
 import NavigationOverlay from './components/NavigationOverlay';
 import { searchLocations, getRoute } from './services/geminiService';
 import { Route, SearchResult, SystemSettings, WeatherData } from './types';
