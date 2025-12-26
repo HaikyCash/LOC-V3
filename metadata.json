@@ -1,0 +1,7 @@
+{
+  "name": "LOC-V2 MG EDITION",
+  "description": "Navegador tático operacional v2 para o território de Minas Gerais por @Almejarei.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}

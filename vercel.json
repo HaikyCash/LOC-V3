@@ -1,0 +1,19 @@
+
+{
+  "version": 2,
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/service-worker.js", "destination": "/service-worker.js" },
+    { "source": "/manifest.json", "destination": "/manifest.json" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/service-worker.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
+        { "key": "Service-Worker-Allowed", "value": "/" }
+      ]
+    }
+  ]
+}
