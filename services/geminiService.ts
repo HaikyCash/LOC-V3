@@ -2,7 +2,9 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { Route, SearchResult } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Inicializa com uma string vazia se process.env.API_KEY não estiver definido para evitar erro de referência
+const apiKey = process.env.API_KEY || "";
+const ai = new GoogleGenAI({ apiKey });
 
 const OFFLINE_DB: SearchResult[] = [
   { name: "MERCADO CENTRAL BH", lat: -19.9230, lng: -43.9444, type: "MERCADO" },
@@ -20,7 +22,7 @@ const OFFLINE_DB: SearchResult[] = [
 export async function searchLocations(query: string, userLoc: {lat: number, lng: number}, isOffline: boolean): Promise<SearchResult[]> {
   const normalizedQuery = query.toLowerCase();
   
-  if (isOffline) {
+  if (isOffline || !apiKey) {
     return OFFLINE_DB.filter(item => 
       item.name.toLowerCase().includes(normalizedQuery) || 
       item.type.toLowerCase().includes(normalizedQuery)
@@ -69,8 +71,6 @@ export async function searchLocations(query: string, userLoc: {lat: number, lng:
 
 export async function getRoute(start: [number, number], end: [number, number], isOffline: boolean): Promise<Route> {
   if (isOffline) {
-    // Para modo offline, como não temos um banco de dados de ruas local no navegador, 
-    // indicamos o trajeto direto como "vetor de estimativa".
     return {
       coordinates: [start, end],
       instructions: [],
@@ -80,7 +80,6 @@ export async function getRoute(start: [number, number], end: [number, number], i
   }
 
   try {
-    // ALTERADO PARA 'driving' para seguir ruas corretamente como no GTA
     const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${start[1]},${start[0]};${end[1]},${end[0]}?overview=full&geometries=geojson`;
     const res = await fetch(osrmUrl);
     const data = await res.json();
