@@ -10,7 +10,7 @@ interface FloatingControlsProps {
   onToggleOffline: () => void;
 }
 
-const FloatingControls: React.FC<FloatingControlsProps> = ({ 
+export const FloatingControls: React.FC<FloatingControlsProps> = ({ 
   onRecenter, 
   onZoomIn, 
   onZoomOut, 
@@ -59,5 +59,3 @@ const FloatingControls: React.FC<FloatingControlsProps> = ({
     </div>
   );
 };
-
-export default FloatingControls;
